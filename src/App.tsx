@@ -1,7 +1,8 @@
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import Home from './pages/Home';
+import Members from './pages/Members';
+import Scrutin from './components/Scrutin';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -32,6 +33,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import ScrutinMembers from './components/ScrutinMembers';
 
 setupIonicReact();
 
@@ -39,12 +41,16 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
+        <Route exact path="/members">
+          <Members />
         </Route>
         <Route exact path="/">
-          <Redirect to="/home" />
+          <Redirect to="/scrutins" />
         </Route>
+        <Route exact path="/scrutins">
+          <Scrutin />
+        </Route>
+         <Route path="/scrutin/:id" component={ScrutinMembers} exact />
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
