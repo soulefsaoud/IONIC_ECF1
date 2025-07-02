@@ -4,6 +4,7 @@ import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel
 import { chevronForwardOutline } from 'ionicons/icons';
 import { useHistory } from "react-router-dom";
 
+
 const Scrutin: React.FC = () => {
   const [scrutins, setScrutins] = useState<Scrutin[]>([]);
   const history = useHistory();
@@ -16,9 +17,9 @@ const Scrutin: React.FC = () => {
         date: string;
     }
     useEffect(() => {
-      // Simulate fetching scrutins from an API
+     
       const fetchScrutins = async () => {
-        // Replace with actual API call
+       
         const response = await fetch('/api/v1/scrutins');
         const dataScrutins = await response.json();
         setScrutins(dataScrutins.data);
@@ -32,6 +33,21 @@ const Scrutin: React.FC = () => {
     const handleViewDetails = (id: number) => {
         history.push(`/scrutin/${id}`);
     };
+
+
+//  const toggleStat = (id: string) => {
+//     <ScrutinMembersTable id={id} />;     
+//     console.log(`Toggle stat for scrutin ID: ${id}`);  
+//   };  
+
+
+    
+
+  const goToStats = (scrutinId:number) => {
+    history.push(`/stats/${scrutinId}`);
+  };
+
+
 
     return (    
 
@@ -57,6 +73,10 @@ const Scrutin: React.FC = () => {
             <IonButton onClick={() => handleViewDetails(scrutin.id)}>
               Voir les détails
               <IonIcon slot="end" icon={chevronForwardOutline} />
+            </IonButton>
+            {/* <IonButton expand="full" onClick={() => toggleStat(id)}>Toggle Stat</IonButton> */}
+            <IonButton onClick={() => goToStats(scrutin.id)} style={{ marginTop: '8px' }}>
+              View Stats
             </IonButton>
           </IonCardContent>
         </IonCard>

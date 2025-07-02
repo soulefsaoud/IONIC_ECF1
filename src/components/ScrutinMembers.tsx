@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonList } from '@ionic/react';
+import {
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonCardContent,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonButton
+} from '@ionic/react';
 
-interface ScrutinDetailsProps {
+export interface ScrutinDetailsProps {
   id: string;
 }
 
@@ -41,37 +50,57 @@ const ScrutinMembers: React.FC = () => {
     fetchScrutinDetails();
   }, [id]);
 
+  const toggleVote = (memberId: number) => {
+    setMembers(prevMembers =>
+      prevMembers.map(member =>
+        member.id === memberId
+          ? { ...member, has_voted: member.has_voted ? 0 : 1 }
+          : member
+      )
+    );
+  };
+
+
+ 
   return (
     <div style={{ height: '100vh', overflowY: 'auto', padding: '16px' }}>
-    <IonList>
-      {members.map((member) => (
-        <IonCard key={member.id}>
-          <IonCardHeader>
-            <IonCardTitle>{member.last_name}</IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            <IonItem lines="none">
-              <IonLabel>Date de naissance: {new Date(member.birth_date).toLocaleDateString()}</IonLabel>
-            </IonItem>
-            <IonItem lines="none">
-              <IonLabel>Nom: {member.last_name}</IonLabel>
-            </IonItem>
-            <IonItem lines="none">
-              <IonLabel>Prénom: {member.first_name}</IonLabel>
-            </IonItem>
-            <IonItem lines="none">
-              <IonLabel>Has Voted: {member.has_voted ? 'Yes' : 'No'}</IonLabel>
-            </IonItem>
-            <IonItem lines="none">
-              <IonLabel>ID: {member.id}</IonLabel>
-            </IonItem>
-            <IonItem lines="none">
-              <IonLabel>Scrutin ID: {id}</IonLabel>
-            </IonItem>
-          </IonCardContent>
-        </IonCard>
-      ))}
-    </IonList>
+      <IonList>
+        {members.map((member) => (
+          <IonCard key={member.id}>
+            <IonCardHeader>
+              <IonCardTitle>{member.last_name}</IonCardTitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <IonItem lines="none">
+                <IonLabel>Date de naissance: {new Date(member.birth_date).toLocaleDateString()}</IonLabel>
+              </IonItem>
+              <IonItem lines="none">
+                <IonLabel>Nom: {member.last_name}</IonLabel>
+              </IonItem>
+              <IonItem lines="none">
+                <IonLabel>Prénom: {member.first_name}</IonLabel>
+              </IonItem>
+               <IonItem lines="none">
+                <IonLabel>Has Voted: {member.has_voted ? 'Yes' : 'No'}</IonLabel>
+                {!member.has_voted ? (
+                  <IonButton onClick={() => toggleVote(member.id)}>Vote</IonButton>
+                ) : (
+                  <IonLabel color="success">Voted</IonLabel>
+                )}
+              </IonItem>
+              <IonItem lines="none">
+                <IonLabel>Member ID: {member.id}</IonLabel>
+              </IonItem>
+              <IonItem lines="none">
+                <IonLabel>ID: {member.id}</IonLabel>
+              </IonItem>
+              <IonItem lines="none">
+                <IonLabel>Scrutin ID: {id}</IonLabel>
+              </IonItem>
+            </IonCardContent>
+          </IonCard>
+        ))}
+      </IonList>
     </div>
   );
 };

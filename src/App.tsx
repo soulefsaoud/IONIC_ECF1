@@ -34,6 +34,7 @@ import '@ionic/react/css/palettes/dark.system.css';
 /* Theme variables */
 import './theme/variables.css';
 import ScrutinMembers from './components/ScrutinMembers';
+import ScrutinMembersTable from './components/ScrutinMembersTable';
 
 setupIonicReact();
 
@@ -50,10 +51,23 @@ const App: React.FC = () => (
         <Route exact path="/scrutins">
           <Scrutin />
         </Route>
-         <Route path="/scrutin/:id" component={ScrutinMembers} exact />
+        <Route exact path="/stats">
+          <ScrutinMembersTable />
+        </Route>
+        <Route path="/stats/:id" component={ScrutinMembersTable} exact />
+        <Route path="/scrutin/:id" component={ScrutinMembers} exact />
+        <Route path="/scrutin/:id/members" component={ScrutinMembers} exact />
+        <Route path="/scrutin/:id/members/:memberId" component={ScrutinMembers} exact />
+        <Route path="/scrutin/:id/members/:memberId/vote" component={ScrutinMembers} exact />
+        <Route path="/scrutin/:id/members/:memberId/unvote" component={ScrutinMembers} exact />
+        <Route path="/scrutin/:id/members/:memberId/details" component={ScrutinMembers} exact />
+        <Route path="/scrutin/:id/members/:memberId/edit" component={ScrutinMembers} exact />
+        <Route path="/scrutin/:id/members/:memberId/delete" component={ScrutinMembers} exact />
+       
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>
 );
-
+  
+        
 export default App;
